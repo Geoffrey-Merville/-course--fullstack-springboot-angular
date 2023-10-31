@@ -14,6 +14,7 @@ import java.net.InetAddress;
 import java.util.Collection;
 
 import static io.getarrays.server.enumeration.Status.*;
+import static java.lang.Boolean.*;
 
 @Service
 @Transactional
@@ -47,17 +48,21 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public Server get(Long id) {
-        return null;
+        log.info("Fetching server by id: {}", id);
+        return serverRepository.findById(id).get();
     }
 
     @Override
     public Server update(Server server) {
-        return null;
+        log.info("Updating server: {}", server.getName());
+        return serverRepository.save(server);
     }
 
     @Override
-    public Server delete(Long id) {
-        return null;
+    public Boolean delete(Long id) {
+        log.info("Deleting server by ID: {}", id);
+        serverRepository.deleteById(id);
+        return TRUE;
     }
 
     private String setServerImageUrl() {

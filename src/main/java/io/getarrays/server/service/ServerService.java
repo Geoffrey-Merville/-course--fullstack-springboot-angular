@@ -18,5 +18,5 @@ public interface ServerService {
 
     Server update(Server server);
 
-    Server delete(Long id);
+    Boolean delete(Long id);
 }
