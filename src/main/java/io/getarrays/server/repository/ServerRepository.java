@@ -1,4 +1,4 @@
-package io.getarrays.server.enumeration.repository;
+package io.getarrays.server.repository;
 
 import io.getarrays.server.model.Server;
 import org.springframework.data.jpa.repository.JpaRepository;
