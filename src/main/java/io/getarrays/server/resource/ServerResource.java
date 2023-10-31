@@ -64,4 +64,17 @@ public class ServerResource {
                         .build()
         );
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Response> getServer(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(
+                Response.builder()
+                        .timeStamp(now())
+                        .data(Map.of("server", serverService.get(id)))
+                        .message("Server retrieved")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
 }
