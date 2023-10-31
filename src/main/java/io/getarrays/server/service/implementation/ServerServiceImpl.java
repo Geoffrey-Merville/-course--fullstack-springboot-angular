@@ -1,5 +1,6 @@
 package io.getarrays.server.service.implementation;
 
+import io.getarrays.server.enumeration.Status;
 import io.getarrays.server.model.Server;
 import io.getarrays.server.repository.ServerRepository;
 import io.getarrays.server.service.ServerService;
@@ -8,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collection;
 
 @Service
@@ -25,8 +29,13 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public Server ping(String ipAddress) {
-        return null;
+    public Server ping(String ipAddress) throws IOException {
+        log.info("Pinging server IP: {}", ipAddress);
+        Server server = serverRepository.findByIpAddress(ipAddress);
+        InetAddress address = InetAddress.getByName(ipAddress);
+        server.setStatus(address.isReachable(10000) ? Status.SERVER_UP : Status.SERVER_DOWN);
+        serverRepository.save(server);
+        return server;
     }
 
     @Override
